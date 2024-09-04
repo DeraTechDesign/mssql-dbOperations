@@ -1,0 +1,14 @@
+{
+  "name": "mssql-dboperations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "DBOperations.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mssql": "^11.0.1"
+  }
+}

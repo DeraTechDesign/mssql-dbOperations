@@ -64,6 +64,12 @@ async function test() {
   //   "IsMerkeziKodu='C01'"
   // );
 
+  // // 1) Delete several specific rows
+  // await db.deleteDBValues("Orders", "OrderID", [101, 102, 103]);
+
+  // // 2) Delete rows matching an arbitrary condition
+  // await db.deleteDBValues("Logs", "CreatedAt < DATEADD(day, -30, GETDATE())");
+
   console.log("isExist:", isExist);
   console.log("isExistSayac:", isExistSayac);
   console.log("getDBValues:", getDBValues);

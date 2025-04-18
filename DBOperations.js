@@ -118,6 +118,25 @@ class Database {
     return result.rowsAffected[0] > 0;
   }
 
+  async deleteDBValues(tableName, columnOrCondition, values = undefined) {
+    let sqlQuery;
+    const params = {};
+
+    // Form 1: column + array  ➜ “…WHERE column IN (…)”
+    if (Array.isArray(values)) {
+      if (values.length === 0) return 0; // nothing to delete
+      const placeholders = values.map((_, i) => `@v${i}`).join(", ");
+      sqlQuery = `DELETE FROM ${tableName} WHERE ${columnOrCondition} IN (${placeholders})`;
+      values.forEach((val, i) => (params[`v${i}`] = val));
+    } else {
+      // Form 2: raw WHERE clause
+      sqlQuery = `DELETE FROM ${tableName} WHERE ${columnOrCondition}`;
+    }
+
+    const result = await this.query(sqlQuery, params);
+    return result.rowsAffected[0] ?? 0;
+  }
+
   async truncateTable(tableName) {
     const sqlQuery = `TRUNCATE TABLE ${tableName}`;
     await this.query(sqlQuery);
